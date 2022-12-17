@@ -24,6 +24,13 @@ const listTopNews = (data) => {
     let html = ''
     let title = ''
     data.forEach((element) => {
+        let imageUrl;
+        if (element.multimedia && element.multimedia.length > 0) {
+            imageUrl = element.multimedia[0].url;
+        }
+        else {
+            imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
+        }
         if (element.title.length < 100) {
             title = element.title
         }
@@ -32,7 +39,7 @@ const listTopNews = (data) => {
         }
         html += `<div class="news">
                     <div class="img">
-                        <img src=${element.url} alt="image">
+                        <img src=${imageUrl} alt="image">
                     </div>
                     <div class="text">
                         <div class="title">
@@ -43,4 +50,5 @@ const listTopNews = (data) => {
     })
     topNews.innerHTML = html
 }
+
 getNews().then(listTopNews);
